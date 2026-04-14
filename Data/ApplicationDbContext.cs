@@ -1,3 +1,4 @@
+using CitasMedicasApi.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CitasMedicasApi.Data
@@ -9,6 +10,6 @@ namespace CitasMedicasApi.Data
             
         }
 
-       
+       public DbSet<PatientEntity> Patients { get; set; }
     }
 }

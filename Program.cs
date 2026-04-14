@@ -1,4 +1,6 @@
 using CitasMedicasApi.Data;
+using CitasMedicasApi.Services.Implementations;
+using CitasMedicasApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
@@ -8,6 +10,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddTransient<IPatientService, PatientService>();
 
 builder.Services.AddOpenApi();
 
