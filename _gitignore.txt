@@ -574,11 +574,14 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp,images,video,windows,macos,linux,dotnetcore,visualstudiocode
 
+bin/
+obj/
+.DS_Store
+
+appsettings.Development.json
 *.db
 *.db-shm
 *.db-wal
-appsettings.Development.json
-
 .env
 .env.*
 secrets.json
