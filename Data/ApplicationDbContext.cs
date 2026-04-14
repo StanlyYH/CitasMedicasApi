@@ -1,3 +1,4 @@
+using CitasMedicasApi.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CitasMedicasApi.Data
@@ -6,9 +7,8 @@ namespace CitasMedicasApi.Data
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            
         }
 
-       
+        public DbSet<HealthCenterEntity> HealthCenters { get; set; }
     }
 }
