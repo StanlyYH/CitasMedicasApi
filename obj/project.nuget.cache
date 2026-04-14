@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "q3nuHA45Y0M=",
+  "success": true,
+  "projectFilePath": "/Users/stanly/Library/Mobile Documents/com~apple~CloudDocs/UNAH /POO/Proyecto_CitaMedicaApi/CitasMedicasApi/CitasMedicasApi.csproj",
+  "expectedPackageFiles": [
+    "/Users/stanly/.nuget/packages/microsoft.aspnetcore.openapi/10.0.2/microsoft.aspnetcore.openapi.10.0.2.nupkg.sha512",
+    "/Users/stanly/.nuget/packages/microsoft.openapi/2.0.0/microsoft.openapi.2.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
