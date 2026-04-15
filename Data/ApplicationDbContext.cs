@@ -1,5 +1,5 @@
-using CitasMedicasApi.Entities;
 using Microsoft.EntityFrameworkCore;
+using CitasMedicasApi.Entities;
 
 namespace CitasMedicasApi.Data
 {
@@ -7,9 +7,11 @@ namespace CitasMedicasApi.Data
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            
         }
 
-       public DbSet<PatientEntity> Patients { get; set; }
+        public DbSet<PatientEntity> Patients { get; set; }
+        public DbSet<HealthCenterEntity> HealthCenters { get; set; }
+        public DbSet<DoctorEntity> Doctors { get; set; }
+        public DbSet<AppointmentEntity> Appointments { get; set; }
     }
 }
