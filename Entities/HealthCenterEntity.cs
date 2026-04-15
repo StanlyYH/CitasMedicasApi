@@ -1,39 +1,41 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using CitasMedicasApi.Entities;
 
 namespace CitasMedicasApi.Entities
 {
+    [Table("health_centers")]
     public class HealthCenterEntity : BaseEntity
     {
         [Required]
-        [MaxLength(150)]
+        [StringLength(150)]
         [Column("name")]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(250)]
+        [StringLength(250)]
         [Column("address")]
         public string Address { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [StringLength(100)]
         [Column("municipality")]
         public string Municipality { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [StringLength(100)]
         [Column("department")]
         public string Department { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [StringLength(20)]
         [Column("phone_number")]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [StringLength(20)]
         [Column("status")]
         public string Status { get; set; }
+
+        public ICollection<DoctorEntity> Doctors { get; set; } = new List<DoctorEntity>();
     }
 }
