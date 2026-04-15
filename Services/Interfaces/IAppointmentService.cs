@@ -1,16 +1,17 @@
 using CitasMedicasApi.DTOs.Appointments;
+using CitasMedicasApi.DTOs.Common;
 
 namespace CitasMedicasApi.Services.Interfaces
 {
     public interface IAppointmentService
     {
-        Task<IEnumerable<AppointmentResponseDto>> GetAllAsync();
-        Task<AppointmentResponseDto> GetByIdAsync(string id);
-        Task<AppointmentResponseDto> CreateAsync(CreateAppointmentDto dto);
-        Task<bool> UpdateAsync(string id, UpdateAppointmentDto dto);
-        Task<bool> DeleteAsync(string id);
-        Task<IEnumerable<AppointmentResponseDto>> GetByPatientIdAsync(string patientId);
-        Task<IEnumerable<AppointmentResponseDto>> GetByDoctorIdAsync(string doctorId);
-        Task<bool> UpdateStatusAsync(string id, UpdateAppointmentStatusDto dto);
+        Task<ResponseDto<PageDto<List<AppointmentResponseDto>>>> GetPageAsync(string searchTerm = "", int page = 1, int pageSize = 10);
+        Task<ResponseDto<AppointmentResponseDto>> GetOneByIdAsync(string id);
+        Task<ResponseDto<AppointmentResponseDto>> CreateAsync(CreateAppointmentDto dto);
+        Task<ResponseDto<AppointmentResponseDto>> EditAsync(string id, UpdateAppointmentDto dto);
+        Task<ResponseDto<AppointmentResponseDto>> DeleteAsync(string id);
+        Task<ResponseDto<List<AppointmentResponseDto>>> GetByPatientIdAsync(string patientId);
+        Task<ResponseDto<List<AppointmentResponseDto>>> GetByDoctorIdAsync(string doctorId);
+        Task<ResponseDto<AppointmentResponseDto>> UpdateStatusAsync(string id, UpdateAppointmentStatusDto dto);
     }
 }

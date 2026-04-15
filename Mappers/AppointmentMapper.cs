@@ -3,12 +3,13 @@ using CitasMedicasApi.Entities;
 
 namespace CitasMedicasApi.Mappers
 {
-    public static class AppointmentMapper
+    public class AppointmentMapper
     {
-        public static AppointmentEntity ToEntity(CreateAppointmentDto dto)
+        public static AppointmentEntity CreateDtoToEntity(CreateAppointmentDto dto)
         {
             return new AppointmentEntity
             {
+                Id = Guid.NewGuid().ToString(),
                 PatientId = dto.PatientId,
                 DoctorId = dto.DoctorId,
                 AppointmentDate = dto.AppointmentDate,
@@ -19,7 +20,21 @@ namespace CitasMedicasApi.Mappers
             };
         }
 
-        public static AppointmentResponseDto ToResponseDto(AppointmentEntity entity)
+        public static AppointmentEntity EditDtoToEntity(AppointmentEntity entity, UpdateAppointmentDto dto)
+        {
+            entity.PatientId = dto.PatientId;
+            entity.DoctorId = dto.DoctorId;
+            entity.AppointmentDate = dto.AppointmentDate;
+            entity.AppointmentTime = dto.AppointmentTime;
+            entity.Reason = dto.Reason;
+            entity.Status = dto.Status;
+            entity.Notes = dto.Notes;
+            entity.UpdatedDate = DateTime.UtcNow;
+
+            return entity;
+        }
+
+        public static AppointmentResponseDto OneEntityToDto(AppointmentEntity entity)
         {
             return new AppointmentResponseDto
             {
@@ -34,16 +49,19 @@ namespace CitasMedicasApi.Mappers
             };
         }
 
-        public static void UpdateEntity(AppointmentEntity entity, UpdateAppointmentDto dto)
+        public static List<AppointmentResponseDto> ListEntityToListDto(List<AppointmentEntity> entities)
         {
-            entity.PatientId = dto.PatientId;
-            entity.DoctorId = dto.DoctorId;
-            entity.AppointmentDate = dto.AppointmentDate;
-            entity.AppointmentTime = dto.AppointmentTime;
-            entity.Reason = dto.Reason;
-            entity.Status = dto.Status;
-            entity.Notes = dto.Notes;
-            entity.UpdatedDate = DateTime.UtcNow;
+            return entities.Select(appointment => new AppointmentResponseDto
+            {
+                Id = appointment.Id,
+                PatientId = appointment.PatientId,
+                DoctorId = appointment.DoctorId,
+                AppointmentDate = appointment.AppointmentDate,
+                AppointmentTime = appointment.AppointmentTime,
+                Reason = appointment.Reason,
+                Status = appointment.Status,
+                Notes = appointment.Notes
+            }).ToList();
         }
     }
 }

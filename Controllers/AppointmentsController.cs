@@ -1,13 +1,11 @@
-using CitasMedicasApi.Constants;
 using CitasMedicasApi.DTOs.Appointments;
-using CitasMedicasApi.DTOs.Common;
 using CitasMedicasApi.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CitasMedicasApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/appointments")]
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentService _appointmentService;
@@ -18,159 +16,59 @@ namespace CitasMedicasApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetPage(string searchTerm = "", int page = 1, int pageSize = 10)
         {
-            var data = await _appointmentService.GetAllAsync();
-
-            return StatusCode(HttpStatusCode.OK, new ResponseDto<IEnumerable<AppointmentResponseDto>>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Message = HttpMessageResponse.REGISTERS_FOUND,
-                Status = true,
-                Data = data
-            });
+            var response = await _appointmentService.GetPageAsync(searchTerm, page, pageSize);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetOneById(string id)
         {
-            var data = await _appointmentService.GetByIdAsync(id);
-
-            if (data == null)
-            {
-                return StatusCode(HttpStatusCode.NOT_FOUND, new ResponseDto<AppointmentResponseDto>
-                {
-                    StatusCode = HttpStatusCode.NOT_FOUND,
-                    Message = HttpMessageResponse.REGISTER_NOT_FOUND,
-                    Status = false,
-                    Data = null
-                });
-            }
-
-            return StatusCode(HttpStatusCode.OK, new ResponseDto<AppointmentResponseDto>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Message = HttpMessageResponse.REGISTER_FOUND,
-                Status = true,
-                Data = data
-            });
+            var response = await _appointmentService.GetOneByIdAsync(id);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateAppointmentDto dto)
+        public async Task<IActionResult> Create(CreateAppointmentDto dto)
         {
-            var data = await _appointmentService.CreateAsync(dto);
-
-            return StatusCode(HttpStatusCode.CREATED, new ResponseDto<AppointmentResponseDto>
-            {
-                StatusCode = HttpStatusCode.CREATED,
-                Message = HttpMessageResponse.REGISTER_CREATED,
-                Status = true,
-                Data = data
-            });
+            var response = await _appointmentService.CreateAsync(dto);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, [FromBody] UpdateAppointmentDto dto)
+        public async Task<IActionResult> Edit(string id, UpdateAppointmentDto dto)
         {
-            var updated = await _appointmentService.UpdateAsync(id, dto);
-
-            if (!updated)
-            {
-                return StatusCode(HttpStatusCode.NOT_FOUND, new ResponseDto<object>
-                {
-                    StatusCode = HttpStatusCode.NOT_FOUND,
-                    Message = HttpMessageResponse.REGISTER_NOT_FOUND,
-                    Status = false,
-                    Data = null
-                });
-            }
-
-            return StatusCode(HttpStatusCode.OK, new ResponseDto<object>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Message = HttpMessageResponse.REGISTER_UPDATED,
-                Status = true,
-                Data = null
-            });
+            var response = await _appointmentService.EditAsync(id, dto);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var deleted = await _appointmentService.DeleteAsync(id);
-
-            if (!deleted)
-            {
-                return StatusCode(HttpStatusCode.NOT_FOUND, new ResponseDto<object>
-                {
-                    StatusCode = HttpStatusCode.NOT_FOUND,
-                    Message = HttpMessageResponse.REGISTER_NOT_FOUND,
-                    Status = false,
-                    Data = null
-                });
-            }
-
-            return StatusCode(HttpStatusCode.OK, new ResponseDto<object>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Message = HttpMessageResponse.REGISTER_DELETED,
-                Status = true,
-                Data = null
-            });
+            var response = await _appointmentService.DeleteAsync(id);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpGet("patient/{patientId}")]
         public async Task<IActionResult> GetByPatientId(string patientId)
         {
-            var data = await _appointmentService.GetByPatientIdAsync(patientId);
-
-            return StatusCode(HttpStatusCode.OK, new ResponseDto<IEnumerable<AppointmentResponseDto>>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Message = HttpMessageResponse.REGISTERS_FOUND,
-                Status = true,
-                Data = data
-            });
+            var response = await _appointmentService.GetByPatientIdAsync(patientId);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpGet("doctor/{doctorId}")]
         public async Task<IActionResult> GetByDoctorId(string doctorId)
         {
-            var data = await _appointmentService.GetByDoctorIdAsync(doctorId);
-
-            return StatusCode(HttpStatusCode.OK, new ResponseDto<IEnumerable<AppointmentResponseDto>>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Message = HttpMessageResponse.REGISTERS_FOUND,
-                Status = true,
-                Data = data
-            });
+            var response = await _appointmentService.GetByDoctorIdAsync(doctorId);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpPatch("{id}/status")]
-        public async Task<IActionResult> UpdateStatus(string id, [FromBody] UpdateAppointmentStatusDto dto)
+        public async Task<IActionResult> UpdateStatus(string id, UpdateAppointmentStatusDto dto)
         {
-            var updated = await _appointmentService.UpdateStatusAsync(id, dto);
-
-            if (!updated)
-            {
-                return StatusCode(HttpStatusCode.NOT_FOUND, new ResponseDto<object>
-                {
-                    StatusCode = HttpStatusCode.NOT_FOUND,
-                    Message = HttpMessageResponse.REGISTER_NOT_FOUND,
-                    Status = false,
-                    Data = null
-                });
-            }
-
-            return StatusCode(HttpStatusCode.OK, new ResponseDto<object>
-            {
-                StatusCode = HttpStatusCode.OK,
-                Message = HttpMessageResponse.REGISTER_UPDATED,
-                Status = true,
-                Data = null
-            });
+            var response = await _appointmentService.UpdateStatusAsync(id, dto);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }

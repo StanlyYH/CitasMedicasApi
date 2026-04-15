@@ -3,12 +3,13 @@ using CitasMedicasApi.Entities;
 
 namespace CitasMedicasApi.Mappers
 {
-    public static class DoctorMapper
+    public class DoctorMapper
     {
-        public static DoctorEntity ToEntity(CreateDoctorDto dto)
+        public static DoctorEntity CreateDtoToEntity(CreateDoctorDto dto)
         {
             return new DoctorEntity
             {
+                Id = Guid.NewGuid().ToString(),
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 PhoneNumber = dto.PhoneNumber,
@@ -19,7 +20,21 @@ namespace CitasMedicasApi.Mappers
             };
         }
 
-        public static DoctorResponseDto ToResponseDto(DoctorEntity entity)
+        public static DoctorEntity EditDtoToEntity(DoctorEntity entity, UpdateDoctorDto dto)
+        {
+            entity.FirstName = dto.FirstName;
+            entity.LastName = dto.LastName;
+            entity.PhoneNumber = dto.PhoneNumber;
+            entity.Email = dto.Email;
+            entity.Specialty = dto.Specialty;
+            entity.HealthCenterId = dto.HealthCenterId;
+            entity.Status = dto.Status;
+            entity.UpdatedDate = DateTime.UtcNow;
+
+            return entity;
+        }
+
+        public static DoctorResponseDto OneEntityToDto(DoctorEntity entity)
         {
             return new DoctorResponseDto
             {
@@ -34,16 +49,19 @@ namespace CitasMedicasApi.Mappers
             };
         }
 
-        public static void UpdateEntity(DoctorEntity entity, UpdateDoctorDto dto)
+        public static List<DoctorResponseDto> ListEntityToListDto(List<DoctorEntity> entities)
         {
-            entity.FirstName = dto.FirstName;
-            entity.LastName = dto.LastName;
-            entity.PhoneNumber = dto.PhoneNumber;
-            entity.Email = dto.Email;
-            entity.Specialty = dto.Specialty;
-            entity.HealthCenterId = dto.HealthCenterId;
-            entity.Status = dto.Status;
-            entity.UpdatedDate = DateTime.UtcNow;
+            return entities.Select(doctor => new DoctorResponseDto
+            {
+                Id = doctor.Id,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                PhoneNumber = doctor.PhoneNumber,
+                Email = doctor.Email,
+                Specialty = doctor.Specialty,
+                HealthCenterId = doctor.HealthCenterId,
+                Status = doctor.Status
+            }).ToList();
         }
     }
 }
