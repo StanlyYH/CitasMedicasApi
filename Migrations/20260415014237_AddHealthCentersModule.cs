@@ -16,12 +16,12 @@ namespace CitasMedicasApi.Migrations
                 columns: table => new
                 {
                     id = table.Column<string>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
-                    Address = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
-                    Municipality = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    Department = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
-                    Status = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    name = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
+                    address = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
+                    municipality = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    department = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    phone_number = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    status = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     created_by_id = table.Column<string>(type: "TEXT", nullable: true),
                     created_date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     updated_by_id = table.Column<string>(type: "TEXT", nullable: true),

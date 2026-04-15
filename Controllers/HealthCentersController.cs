@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CitasMedicasApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/healthcenters")]
     [ApiController]
     public class HealthCentersController : ControllerBase
     {
@@ -16,57 +16,38 @@ namespace CitasMedicasApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<HealthCenterResponseDto>>> GetAll()
+        public async Task<ActionResult> GetPage(string searchTerm = "", int page = 1, int pageSize = 10)
         {
-            var healthCenters = await _healthCenterService.GetAllAsync();
-            return Ok(healthCenters);
+            var response = await _healthCenterService.GetPageAsync(searchTerm, page, pageSize);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<HealthCenterResponseDto>> GetById(string id)
+        public async Task<ActionResult> GetOneById(string id)
         {
-            var healthCenter = await _healthCenterService.GetByIdAsync(id);
-
-            if (healthCenter == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(healthCenter);
+            var response = await _healthCenterService.GetOneByIdAsync(id);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpPost]
-        public async Task<ActionResult<HealthCenterResponseDto>> Create(CreateHealthCenterDto dto)
+        public async Task<ActionResult> Create(CreateHealthCenterDto dto)
         {
-            var createdHealthCenter = await _healthCenterService.CreateAsync(dto);
-
-            return CreatedAtAction(nameof(GetById), new { id = createdHealthCenter.Id }, createdHealthCenter);
+            var response = await _healthCenterService.CreateAsync(dto);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(string id, UpdateHealthCenterDto dto)
+        public async Task<ActionResult> Edit(string id, UpdateHealthCenterDto dto)
         {
-            var updated = await _healthCenterService.UpdateAsync(id, dto);
-
-            if (!updated)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            var response = await _healthCenterService.EditAsync(id, dto);
+            return StatusCode(response.StatusCode, response);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<ActionResult> Delete(string id)
         {
-            var deleted = await _healthCenterService.DeleteAsync(id);
-
-            if (!deleted)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
+            var response = await _healthCenterService.DeleteAsync(id);
+            return StatusCode(response.StatusCode, response);
         }
     }
 }

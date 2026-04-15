@@ -9,6 +9,7 @@ namespace CitasMedicasApi.Mappers
         {
             return new HealthCenterEntity
             {
+                Id = Guid.NewGuid().ToString(),
                 Name = dto.Name,
                 Address = dto.Address,
                 Municipality = dto.Municipality,
